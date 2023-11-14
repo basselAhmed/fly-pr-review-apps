@@ -22,6 +22,9 @@ region="${INPUT_REGION:-${FLY_REGION:-iad}}"
 org="${INPUT_ORG:-${FLY_ORG:-personal}}"
 image="$INPUT_IMAGE"
 config="${INPUT_CONFIG:-fly.toml}"
+VM="${INPUT_VM:-shared-cpu-1x}"
+VM_MEMORY="${INPUT_VM_MEMORY:-256}"
+
 
 if ! echo "$app" | grep "$PR_NUMBER"; then
   echo "For safety, this action requires the app's name to contain the PR number."
@@ -53,7 +56,7 @@ fi
 
 # Trigger the deploy of the new version.
 echo "Contents of config $config file: " && cat "$config"
-flyctl deploy --config "$config" --app "$app" --region "$region" --image "$image" --strategy immediate --vm-size shared-cpu-2x
+flyctl deploy --config "$config" --app "$app" --region "$region" --image "$image" --strategy immediate --vm-memory "$VM_MEMORY" --vm-size "$VM"
 
 # Make some info available to the GitHub workflow.
 flyctl status --app "$app" --json >status.json
