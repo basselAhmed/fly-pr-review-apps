@@ -56,7 +56,7 @@ fi
 
 # Trigger the deploy of the new version.
 echo "Contents of config $config file: " && cat "$config"
-flyctl deploy --config "$config" --app "$app" --region "$region" --image "$image" --strategy immediate --vm-memory "$MEMORY" --vm-size "$VM"
+flyctl deploy --config "$config" --app "$app" --region "$region" --image "$image" --strategy immediate --remote-only --vm-memory "$MEMORY" --vm-size "$VM"
 
 # Make some info available to the GitHub workflow.
 flyctl status --app "$app" --json >status.json
